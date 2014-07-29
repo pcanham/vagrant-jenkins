@@ -1,0 +1,5 @@
+cd /root
+
+wget -O /root/jenkins-cli.jar  http://localhost:8080/jnlpJars/jenkins-cli.jar
+
+java -jar jenkins-cli.jar -s http://localhost:8080/ create-job CentOS6.5_AMICreator < CentOS-65-AMI.xml
