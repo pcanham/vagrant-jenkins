@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>BUILDDIR</name>
+          <description></description>
+          <defaultValue>/vagrant</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>IMGMOUNT</name>
+          <description></description>
+          <defaultValue>/vagrant/ec2/images</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@2.2.2">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>git@bitbucket.org:pcanham/vagrant-ami_creator.git</url>
+        <credentialsId>ff7eb9af-5e63-4073-84b8-8838d3eb5db1</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/develop</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <browser class="hudson.plugins.git.browser.BitbucketWeb">
+      <url>https://bitbucket.org/pcanham/vagrant-ami_creator/src</url>
+    </browser>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>chmod +x shell/*.sh</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>export BASEDIR=${WORKSPACE}/shell
+cd ${BASEDIR}
+./002_setup-aws.sh
+./003_makedisk.sh
+./004_prepdisk.sh
+./005_packageinstall.sh
+./006_customise.sh
+./007_cleanup.sh
+./008_push2aws.sh
+./009_setupec2node.sh
+./010_Sync2EBS.sh
+./011_MakeEBS.sh
+./012_destroy-aws-env.sh</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
