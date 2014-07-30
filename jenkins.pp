@@ -19,7 +19,8 @@ node default {
       'multiple-scms'         => {},
       'git-client'            => {},
       'rvm'                   => {},
-      'python-wrapper'        => {}
+      'python-wrapper'        => {},
+      'packer'                => {}
     }
   }
 }
