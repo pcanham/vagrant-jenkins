@@ -6,6 +6,7 @@ echo "gem: --no-rdoc --no-ri" >> ~/.gemrc
 puppet module install --force puppetlabs/stdlib
 puppet module install --force puppetlabs/java
 puppet module install --force rtyler/jenkins
+puppet module install --force saz/timezone
 SCRIPT
 
 

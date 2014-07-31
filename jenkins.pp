@@ -1,4 +1,8 @@
 node default {
+  class { 'timezone':
+    timezone => 'UTC',
+  }
+
   class { 'jenkins':
     plugin_hash => {
       'git'                   => {},
@@ -20,7 +24,8 @@ node default {
       'git-client'            => {},
       'rvm'                   => {},
       'python-wrapper'        => {},
-      'packer'                => {}
+      'packer'                => {},
+      'thinBackup'            => {}
     }
   }
 }
