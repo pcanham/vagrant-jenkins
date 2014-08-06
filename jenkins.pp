@@ -22,6 +22,7 @@ node default {
       'scm-api'               => {},
       'multiple-scms'         => {},
       'git-client'            => {},
+      'ruby-runtime'          => {},
       'rvm'                   => {},
       'python-wrapper'        => {},
       'packer'                => {},
