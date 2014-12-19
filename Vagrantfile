@@ -28,7 +28,11 @@ SCRIPT
 
 Vagrant.configure("2") do |config|
 
-  config.vm.provider :virtualbox do |vb|
+  config.vm.box = "thinkside-vbox-centos-65-x64"
+  config.vm.box_check_update = true
+
+  config.vm.provider :virtualbox do |vb, override|
+    override.vm.box_url = "http://vagrant.thinkside.eu/pcanham-centos65_64_virtualbox-puppet-3.7.2.box"
     vb.gui = true
     vb.customize [
       "modifyvm", :id,
@@ -38,15 +42,21 @@ Vagrant.configure("2") do |config|
       ]
   end
 
+  config.vm.provider :vmware_fusion do |v, override|
+      override.vm.box = "thinkside-vmware-centos-65-x64"
+      override.vm.box_url = "http://vagrant.thinkside.eu/pcanham-centos65_64_vmware-puppet-3.7.2.box"
+      v.vmx["memsize"] = 1024
+      v.vmx["numvcpus"] = 4
+  end
 
   config.vm.define :jenkins do |jenkins|
-    jenkins.vm.box = "puppet-centos-65-x64"
-    jenkins.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-65-x64-virtualbox-puppet.box"
     jenkins.vm.network "private_network", ip: "10.0.0.20"
-    #jenkins.vm.network "public_network"
     jenkins.vm.hostname = "jenkins"
-    jenkins.vm.provider :virtualbox do |v|
-      v.customize ["modifyvm", :id, "--memory", "2048" ]
+    jenkins.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048" ]
+    end
+    jenkins.vm.provider :vmware_fusion do |v|
+      v.vmx["memsize"] = 2048
     end
     jenkins.vm.provision :shell, :inline => $script
     jenkins.vm.provision :puppet,
