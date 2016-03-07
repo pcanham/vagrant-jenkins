@@ -1,12 +1,10 @@
 node default {
   class { 'firewall': }
-  firewall { '100 allow http on port 8080':
-    dport  => [ 8080 ],
-    proto  => tcp,
-    action => accept,
+
+  class { 'jenkins':
+    configure_firewall => true
   }
 
-  class { 'jenkins': }
   jenkins::user { 'johndoe':
     email    => 'jdoe@example.com',
     password => 'changeme',
