@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
   config.vm.define :jenkins do |jenkins|
     jenkins.vm.box = "puppet-centos-70-x64"
     jenkins.vm.box = "puppetlabs/centos-7.0-64-puppet"
-    jenkins.vm.box_version = '1.0.1'
+    jenkins.vm.box_version = '= 1.0.1'
     jenkins.vm.box_check_update = true
     jenkins.vm.network "private_network", ip: "10.0.0.20"
     #jenkins.vm.network "public_network"
